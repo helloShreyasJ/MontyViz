@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monty Hall Problem Visualiser</title>
+    <style>
+        #grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 2fr 2fr 1fr;
+            gap: 20px;
+
+        }
+        #grid-layout > div {
+            border: 2px red solid;
+        }
+
+        .height {
+            height: 350px;
+        }
+
+        .hf {
+            display: flex;
+            flex-direction: column;
+            grid-column: span 4;
+            height: 100px;
+        }
+        
+        .hf > h1, h2 {
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+        h2 {
+            margin-top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="grid-layout">
+        <div class="hf">
+            <h1>The Monty Hall Problem</h1>
+            <h2>@MontyViz</h2>
+        </div>
+        <div class="height">2</div>
+        <div class="height">3</div>
+        <div class="height">4</div>
+        <div class="height">5</div>
+        <div class="hf">6</div>
+    </div>
+    <script>
+
+    </script>
+</body>
+</html>
