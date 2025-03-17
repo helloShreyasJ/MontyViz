@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monty Hall Problem Visualiser</title>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Iansui&display=swap');
+    
+        body {
+            margin: 0px;
+            font-family: 'Iansui';
+        }
+
         #grid-layout {
             display: grid;
             grid-template-columns: 2fr 2fr 2fr 1fr;
@@ -12,11 +19,8 @@
 
         }
         #grid-layout > div {
+            display: flex;
             border: 2px red solid;
-        }
-
-        .height {
-            height: 350px;
         }
 
         .hf {
@@ -26,15 +30,38 @@
             height: 100px;
         }
         
-        .hf > h1, h2 {
+        .hf > h1, h3 {
             text-align: center;
         }
 
         h1 {
             margin-top: 0;
+
         }
-        h2 {
+        h3 {
             margin-top: 0px;
+        }
+
+        .door-container {
+            margin-left: 50px;
+            width: 180px;
+            justify-content: center;
+        }
+
+        .door-image {
+            display: block;
+            max-width: 100%; /* Ensure images don't overflow */
+            max-height: 100%;/* Ensure images don't overflow */
+        }
+
+        .monty {
+            display: flex;
+            align-items: end;
+        }
+
+        .monty-image {
+            width: 100%;
+            height: 180px
         }
     </style>
 </head>
@@ -42,13 +69,13 @@
     <div id="grid-layout">
         <div class="hf">
             <h1>The Monty Hall Problem</h1>
-            <h2>@MontyViz</h2>
+            <h3>@MontyViz</h3>
         </div>
-        <div class="height">2</div>
-        <div class="height">3</div>
-        <div class="height">4</div>
-        <div class="height">5</div>
-        <div class="hf">6</div>
+            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
+            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
+            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
+        <div class="monty height"><img class="monty-image" src="monty.jpg"></div>
+        <div class="hf">    </div>
     </div>
     <script>
 
