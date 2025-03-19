@@ -5,63 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monty Hall Problem Visualiser</title>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Iansui&display=swap');
-    
-        body {
-            margin: 0px;
-            font-family: 'Iansui';
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+        * {
+            font-family: 'Noto Serif';
         }
 
         #grid-layout {
             display: grid;
-            grid-template-columns: 2fr 2fr 2fr 1fr;
-            gap: 20px;
-
-        }
-        #grid-layout > div {
-            display: flex;
-            border: 2px red solid;
+            grid-template-columns: 1fr 1fr 1fr;
         }
 
         .hf {
-            display: flex;
-            flex-direction: column;
-            grid-column: span 4;
-            height: 100px;
+            grid-column: span 3;
         }
-        
-        .hf > h1, h3 {
+
+        div > h1 {
+            font-size: 52px;
             text-align: center;
         }
 
-        h1 {
-            margin-top: 0;
-
-        }
-        h3 {
-            margin-top: 0px;
-        }
-
-        .door-container {
-            margin-left: 50px;
-            width: 180px;
-            justify-content: center;
+        #grid-layout2 {
+            grid-column: span 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 5px;
+            justify-self: center;
         }
 
-        .door-image {
-            display: block;
-            max-width: 100%; /* Ensure images don't overflow */
-            max-height: 100%;/* Ensure images don't overflow */
+        #grid-layout2 > div {
+            border: 2px solid red;
         }
 
-        .monty {
-            display: flex;
-            align-items: end;
+        #monty {
+            margin-left: 20px;
         }
 
-        .monty-image {
-            width: 100%;
-            height: 180px
+        #message-container {
+            margin-top: 15px;
+            border: 2px solid red;
+            width:600px;
+            justify-self: center;
+        }
+
+        #message-container > h3 {
+            text-align: center;
+        }
+        #switch, #stay {
+            grid-column: span 3;
+            margin: auto;
+            margin-top: 15px;
+            padding: 5px 10px 5px 10px;
+
+            background-color: white;
+            border: 2px black solid;
+
+            font-size: 13px;
         }
     </style>
 </head>
@@ -69,16 +67,112 @@
     <div id="grid-layout">
         <div class="hf">
             <h1>The Monty Hall Problem</h1>
-            <h3>@MontyViz</h3>
         </div>
-            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
-            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
-            <div class="door-container"><img class="door-image" src="door.jpeg"></div>
-        <div class="monty height"><img class="monty-image" src="monty.jpg"></div>
-        <div class="hf">    </div>
+        <div id="grid-layout2">
+            <div id="door1">Door 1</div>
+            <div id="door2">Door 2</div>
+            <div id="door3">Door 3</div>
+            <div id="monty">Monty</div>
+        </div>
+        <button id="switch">Switch</button>
+        <button id="stay">Stay</button>
+        <div id="message-container" class="hf">
+            <h3 id="message">Click Monty to Start</h3>
+        </div>
+        
     </div>
     <script>
+        let doors = [0,0,0]; //Setting up functionallity using arrays.
+        let randomIndex = 0;
+        let doorSelected; //What door the user selects.
+        let selectedDoorValue = 0; //Value behind selected door. If 0 then goat is behind it. If 1 then car is behind it.
+        let revealedDoorIndex;
+        let door1 = document.getElementById('door1');
+        let door2 = document.getElementById('door2');
+        let door3 = document.getElementById('door3');
+        let monty = document.getElementById('monty');
+        let message = document.getElementById('message');
+        let switchButton = document.getElementById('switch');
+        let stayButton = document.getElementById('stay');
 
+        let gameStart = () => {
+            message.innerHTML = 'Pick a door. One of them might have a car behind it!';
+        }
+        let montyReveals = () => {
+            for(let i = 0; i < doors.length; i++) {
+                if(i !== doorSelected && doors[i] === 0) {
+                    revealedDoorIndex = i;
+                    break;
+                }
+            }
+            if (revealedDoorIndex !== undefined) {
+                if (revealedDoorIndex === 0) {
+                    door1.innerHTML = "Goat";
+                } else if (revealedDoorIndex === 1) {
+                    door2.innerHTML = "Goat";
+                } else {
+                    door3.innerHTML = "Goat";
+                }
+                message.innerHTML = "Monty reveals door " + (revealedDoorIndex + 1) + " which has a goat.";
+            } else {
+                    message.innerHTML = "Something went wrong.";
+            }
+            setTimeout(() => {
+                message.innerHTML = 'Would you like to switch your door with the other or stay?';
+            }, 1000);
+        }
+        let showResult = () => {
+            if(doors[doorSelected] === 0) {
+                message.innerHTML = 'Aw. You got a goat!';
+            } else {
+                message.innerHTML = 'Woooooo!! You got a car.';
+            }
+            if(doors[0] === 1){door1.innerHTML = 'Car';} else {door1.innerHTML = 'Goat';}
+            if(doors[1] === 1){door2.innerHTML = 'Car';} else {door2.innerHTML = 'Goat';}
+            if(doors[2] === 1){door3.innerHTML = 'Car';} else {door3.innerHTML = 'Goat';}
+        }
+
+        monty.addEventListener('click', gameStart);
+        door1.addEventListener('click', () => {
+            selectedDoorValue = doors[0];
+            doorSelected = 0;
+            message.innerHTML = 'You selected door ' + 1;
+            //The value of selected door is set to the value of the zeroth index of the doors array.
+            montyReveals();
+        });
+        door2.addEventListener('click', () => {
+            selectedDoorValue = doors[1];
+            doorSelected = 1;
+            message.innerHTML = 'You selected door ' + 2;
+            //The value of selected door is set to the value of the zeroth index of the doors array.
+            montyReveals();
+        });
+        door3.addEventListener('click', () => {
+            selectedDoorValue = doors[2];
+            doorSelected = 2;
+            message.innerHTML = 'You selected door ' + 3;
+            //The value of selected door is set to the value of the zeroth index of the doors array.
+            montyReveals();
+        });
+        stayButton.addEventListener('click', showResult);
+        switchButton.addEventListener('click',() => {
+            let newDoorIndex;
+            for (let i = 0; i < doors.length; i++) {
+                if (i !== doorSelected && i !== revealedDoorIndex) {
+                newDoorIndex = i;
+                break;
+            }
+        }
+        showResult(newDoorIndex);
+        });
+        
+        window.onload = () => {
+            //As soon as the page loads, the car gets put into one of the doors.
+            randomIndex = Math.floor(Math.random() * 3);
+            doors[randomIndex] = 1;
+            //If the index value is 1 then it has a car behind it.
+            console.log(doors);
+        }
     </script>
 </body>
 </html>
