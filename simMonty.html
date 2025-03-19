@@ -1,86 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Monty Hall Problem Visualiser</title>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
-            * {
-                font-family: 'Noto Serif';
-            }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monty Hall Problem Visualiser</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+        * {
+            font-family: 'Noto Serif';
+        }
 
-            #grid-layout {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-            }
+        #grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background-color: lightblue;
+            border: solid black;
+        }
 
-            .hf {
-                grid-column: span 3;
-            }
-
-            div > h1 {
+        .hf {
+            grid-column: span 3;
+        }
+        div > h1 {
             font-size: 52px;
             text-align: center;
             margin-bottom: 0;
-            }
+        }
 
-            div > h2 {
-                text-align: center;
-                margin-top: 0;
-            }
+        div > h2 {
+            text-align: center;
+            margin-top: 0;
+        }
 
-            #grid-layout2 {
-                grid-column: span 3;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-                gap: 5px;
-                justify-self: center;
-            }
+        #grid-layout2 > div {
+            border: 2px solid red;
+        }
 
-            #grid-layout2 > div {
-                border: 2px solid red;
-            }
+        #message-container {
+            margin-top: 15px;
+            border: 2px solid black;
+            width:600px;
+            justify-self: center;
+        }
 
-            #monty {
-                margin-left: 20px;
-            }
+        #message-container > h3 {
+            text-align: center;
+        }
 
-            #message-container {
-                margin-top: 15px;
-                border: 2px solid red;
-                width:600px;
-                justify-self: center;
-            }
+        .timesToRun-container {
+            grid-column: span 3;
+            justify-self: center;
+        }
 
-            #message-container > h3 {
-                text-align: center;
-            }
-            #switch, #stay {
-                grid-column: span 3;
-                margin: auto;
-                margin-top: 15px;
-                padding: 5px 10px 5px 10px;
+        #visualiser-container {
+            margin: 0;
+            margin-top: 75px;
+            grid-column: span 3;
+            text-align: center;
+            padding: 10px;
+        }
 
-                background-color: white;
-                border: 2px black solid;
+        body {text-align: center;}
 
-                font-size: 13px;
-            }
-            .timesToRun-container {
-                grid-column: span 3;
-                justify-self: center;
-            }
-
-            #visualiser-container {
-                margin: 0;
-                margin-top: 75px;
-                grid-column: span 3;
-                text-align: center;
-                padding: 10px;
-            }   
-        </style>
-    </head>
+        button {background-color: orangered;
+                border: dash black 1px;
+                border-radius: 10px;
+                width: 100px;
+                heigth: 100px;
+        }
+    </style>
+</head>
 <body>
 <div id="grid-layout">
     <div class="hf">
@@ -118,37 +106,37 @@
     let simulations = 0;
 
     function runSimulation() {
-    for (let i = 0; i < simulations; i++) {
-    let doors = [0, 0, 0];
-    let carIndex = Math.floor(Math.random() * 3);
-    doors[carIndex] = 1;
+        for (let i = 0; i < simulations; i++) {
+            let doors = [0, 0, 0];
+            let carIndex = Math.floor(Math.random() * 3);
+            doors[carIndex] = 1;
 
-    let playerChoice = Math.floor(Math.random() * 3);
-    let revealedDoor;
-    for (let j = 0; j < 3; j++) {
-    if (j !== playerChoice && doors[j] === 0) {
-    revealedDoor = j;
-    break;
-    }
-    }
+            let playerChoice = Math.floor(Math.random() * 3);
+            let revealedDoor;
+            for (let j = 0; j < 3; j++) {
+                if (j !== playerChoice && doors[j] === 0) {
+                    revealedDoor = j;
+                    break;
+                }
+            }
 
-    let switchChoice;
-    for (let j = 0; j < 3; j++) {
-        if (j !== playerChoice && j !== revealedDoor) {
-        switchChoice = j;
-        break;
+            let switchChoice;
+            for (let j = 0; j < 3; j++) {
+                if (j !== playerChoice && j !== revealedDoor) {
+                    switchChoice = j;
+                    break;
+                }
+            }
+
+            if (doors[playerChoice] === 1) {
+                stayWins++;
+            }
+            if (doors[switchChoice] === 1) {
+                switchWins++;
+            }
         }
-    }
 
-    if (doors[playerChoice] === 1) {
-        stayWins++;
-    }
-    if (doors[switchChoice] === 1) {
-        switchWins++;
-    }
-    }
-
-    document.getElementById("message").innerHTML = `After ${simulations} simulations:<br>
+        document.getElementById("message").innerHTML = `After ${simulations} simulations:<br>
     Wins by staying: ${stayWins}<br>
     Wins by switching: ${switchWins}<br>
     Switching wins ${(switchWins / simulations * 100).toFixed(2)}% of the time.`;
