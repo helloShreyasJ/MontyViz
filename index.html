@@ -22,6 +22,12 @@
         div > h1 {
             font-size: 52px;
             text-align: center;
+            margin-bottom: 0;
+        }
+
+        div > h2 {
+            text-align: center;
+            margin-top: 0;
         }
 
         #grid-layout2 {
@@ -61,12 +67,20 @@
 
             font-size: 13px;
         }
+        #simulator-container {
+            margin: 0;
+            margin-top: 75px;
+            grid-column: span 3;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="grid-layout">
         <div class="hf">
             <h1>The Monty Hall Problem</h1>
+            <h2>Visualiser</h2>
         </div>
         <div id="grid-layout2">
             <div id="door1">Door 1</div>
@@ -79,13 +93,16 @@
         <div id="message-container" class="hf">
             <h3 id="message">Click Monty to Start</h3>
         </div>
+        <div id="simulator-container">
+            Try out our problem simulator <a href="simMonty.html">here</a>
+        </div>
         
     </div>
     <script>
         let doors = [0,0,0]; //Setting up functionallity using arrays.
         let randomIndex = 0;
         let doorSelected; //What door the user selects.
-        let selectedDoorValue = 0; //Value behind selected door. If 0 then goat is behind it. If 1 then car is behind it.
+        let doorSelectedValue = 0; //Value behind selected door. If 0 then goat is behind it. If 1 then car is behind it.
         let revealedDoorIndex;
         let door1 = document.getElementById('door1');
         let door2 = document.getElementById('door2');
@@ -134,21 +151,21 @@
 
         monty.addEventListener('click', gameStart);
         door1.addEventListener('click', () => {
-            selectedDoorValue = doors[0];
+            doorSelectedValue = doors[0];
             doorSelected = 0;
             message.innerHTML = 'You selected door ' + 1;
             //The value of selected door is set to the value of the zeroth index of the doors array.
             montyReveals();
         });
         door2.addEventListener('click', () => {
-            selectedDoorValue = doors[1];
+            doorSelectedValue = doors[1];
             doorSelected = 1;
             message.innerHTML = 'You selected door ' + 2;
             //The value of selected door is set to the value of the zeroth index of the doors array.
             montyReveals();
         });
         door3.addEventListener('click', () => {
-            selectedDoorValue = doors[2];
+            doorSelectedValue = doors[2];
             doorSelected = 2;
             message.innerHTML = 'You selected door ' + 3;
             //The value of selected door is set to the value of the zeroth index of the doors array.

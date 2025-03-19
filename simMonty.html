@@ -20,8 +20,14 @@
             }
 
             div > h1 {
-                font-size: 52px;
+            font-size: 52px;
+            text-align: center;
+            margin-bottom: 0;
+            }
+
+            div > h2 {
                 text-align: center;
+                margin-top: 0;
             }
 
             #grid-layout2 {
@@ -61,23 +67,44 @@
 
                 font-size: 13px;
             }
+            .timesToRun-container {
+                grid-column: span 3;
+                justify-self: center;
+            }
+
+            #visualiser-container {
+                margin: 0;
+                margin-top: 75px;
+                grid-column: span 3;
+                text-align: center;
+                padding: 10px;
+            }   
         </style>
     </head>
 <body>
 <div id="grid-layout">
     <div class="hf">
         <h1>The Monty Hall Problem</h1>
+        <h2>Simulator</h2>
     </div>
-    <div id="grid-layout2">
-        <div id="door1">Door 1</div>
-        <div id="door2">Door 2</div>
-        <div id="door3">Door 3</div>
-        <div id="monty">Monty</div>
+    <div class="timesToRun-container">
+        <h2>How many times would you like to run the simulator.</h2>
+        <select name="timesToRun" id="timesToRun">
+            <option>1</option>
+            <option>10</option>
+            <option>100</option>
+            <option>500</option>
+            <option>1000</option>
+            <option>10000</option>
+        </select>
+        <button id="confirm-button">Confirm</button>
+        <button id="reset-button">Reset</button>
     </div>
-    <button id="switch">Switch</button>
-    <button id="stay">Stay</button>
     <div id="message-container" class="hf">
-        <h3 id="message">Click Monty to Start</h3>
+        <h3 id="message">Select from the drop down menu</h3>
+    </div>
+    <div id="visualiser-container">
+        Try out our problem visualiser <a href="index.html">here</a>
     </div>
 
 </div>
@@ -86,7 +113,9 @@
 <script>
     let switchWins = 0;
     let stayWins = 0;
-    let simulations = 1000;
+    let confirm_button = document.getElementById('confirm-button');
+    let reset_button = document.getElementById('reset-button');
+    let simulations = 0;
 
     function runSimulation() {
     for (let i = 0; i < simulations; i++) {
@@ -105,17 +134,17 @@
 
     let switchChoice;
     for (let j = 0; j < 3; j++) {
-    if (j !== playerChoice && j !== revealedDoor) {
-    switchChoice = j;
-    break;
-    }
+        if (j !== playerChoice && j !== revealedDoor) {
+        switchChoice = j;
+        break;
+        }
     }
 
     if (doors[playerChoice] === 1) {
-    stayWins++;
+        stayWins++;
     }
     if (doors[switchChoice] === 1) {
-    switchWins++;
+        switchWins++;
     }
     }
 
@@ -125,7 +154,15 @@
     Switching wins ${(switchWins / simulations * 100).toFixed(2)}% of the time.`;
     }
 
-    window.onload = runSimulation;
+    confirm_button.addEventListener('click', () => {
+        let timesToRun_value = document.getElementById('timesToRun').value;
+        simulations = timesToRun_value;
+        runSimulation();
+    });
+
+    reset_button.addEventListener('click', () => {
+        location.reload();
+    });
 </script>
 </body>
 
