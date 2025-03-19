@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monty Hall Problem Visualiser</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+            * {
+                font-family: 'Noto Serif';
+            }
+
+            #grid-layout {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .hf {
+                grid-column: span 3;
+            }
+
+            div > h1 {
+                font-size: 52px;
+                text-align: center;
+            }
+
+            #grid-layout2 {
+                grid-column: span 3;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: 5px;
+                justify-self: center;
+            }
+
+            #grid-layout2 > div {
+                border: 2px solid red;
+            }
+
+            #monty {
+                margin-left: 20px;
+            }
+
+            #message-container {
+                margin-top: 15px;
+                border: 2px solid red;
+                width:600px;
+                justify-self: center;
+            }
+
+            #message-container > h3 {
+                text-align: center;
+            }
+            #switch, #stay {
+                grid-column: span 3;
+                margin: auto;
+                margin-top: 15px;
+                padding: 5px 10px 5px 10px;
+
+                background-color: white;
+                border: 2px black solid;
+
+                font-size: 13px;
+            }
+        </style>
+    </head>
+<body>
+<div id="grid-layout">
+    <div class="hf">
+        <h1>The Monty Hall Problem</h1>
+    </div>
+    <div id="grid-layout2">
+        <div id="door1">Door 1</div>
+        <div id="door2">Door 2</div>
+        <div id="door3">Door 3</div>
+        <div id="monty">Monty</div>
+    </div>
+    <button id="switch">Switch</button>
+    <button id="stay">Stay</button>
+    <div id="message-container" class="hf">
+        <h3 id="message">Click Monty to Start</h3>
+    </div>
+
+</div>
+</head>
+<body>
+<script>
+    let switchWins = 0;
+    let stayWins = 0;
+    let simulations = 1000;
+
+    function runSimulation() {
+    for (let i = 0; i < simulations; i++) {
+    let doors = [0, 0, 0];
+    let carIndex = Math.floor(Math.random() * 3);
+    doors[carIndex] = 1;
+
+    let playerChoice = Math.floor(Math.random() * 3);
+    let revealedDoor;
+    for (let j = 0; j < 3; j++) {
+    if (j !== playerChoice && doors[j] === 0) {
+    revealedDoor = j;
+    break;
+    }
+    }
+
+    let switchChoice;
+    for (let j = 0; j < 3; j++) {
+    if (j !== playerChoice && j !== revealedDoor) {
+    switchChoice = j;
+    break;
+    }
+    }
+
+    if (doors[playerChoice] === 1) {
+    stayWins++;
+    }
+    if (doors[switchChoice] === 1) {
+    switchWins++;
+    }
+    }
+
+    document.getElementById("message").innerHTML = `After ${simulations} simulations:<br>
+    Wins by staying: ${stayWins}<br>
+    Wins by switching: ${switchWins}<br>
+    Switching wins ${(switchWins / simulations * 100).toFixed(2)}% of the time.`;
+    }
+
+    window.onload = runSimulation;
+</script>
+</body>
+
+</html>
