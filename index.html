@@ -6,6 +6,10 @@
     <title>Monty Hall Problem Visualiser</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+       body {
+           background-color: rgb(0, 140, 255);
+       }
+
         * {
             font-family: 'Noto Serif';
         }
@@ -13,6 +17,10 @@
         #grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
+            background-color: rgb(255, 255, 255);
+            margin:auto;
+            width: 800px;
+            border: 10px solid black;
         }
 
         .hf {
@@ -36,11 +44,16 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 5px;
             justify-self: center;
+
         }
 
         #grid-layout2 > div {
-            border: 2px solid red;
+            border: 2px solid black;
+            text-align: center;
+            font-size: large;
         }
+
+
 
         #monty {
             margin-left: 20px;
@@ -48,7 +61,7 @@
 
         #message-container {
             margin-top: 15px;
-            border: 2px solid red;
+            border: 2px solid black;
             width:600px;
             justify-self: center;
         }
@@ -83,10 +96,10 @@
             <h2>Visualiser</h2>
         </div>
         <div id="grid-layout2">
-            <div id="door1">Door 1</div>
-            <div id="door2">Door 2</div>
-            <div id="door3">Door 3</div>
-            <div id="monty">Monty</div>
+            <div id="door1"><img src="door.jpeg">Door 1</div>
+            <div id="door2"><img src="door.jpeg">Door 2</div>
+            <div id="door3"><img src="door.jpeg">Door 3</div>
+            <div id="monty"><img src="monty.jpg" height="300"width="230">Monty</div>
         </div>
         <button id="switch">Switch</button>
         <button id="stay">Stay</button>
