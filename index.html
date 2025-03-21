@@ -195,7 +195,7 @@
         door1.addEventListener('click', () => { //If door 1 is clicked then the selected door becomes door 1
             door1.style.backgroundColor = '#74b9ff';
             setTimeout(() => {
-                door3.style.backgroundColor = 'white';}, 300);
+                door1.style.backgroundColor = 'white';}, 300);
             doorSelectedValue = doors[0];
             doorSelected = 0;
             message.innerHTML = 'You selected door ' + 1;
@@ -205,7 +205,7 @@
         door2.addEventListener('click', () => { //If door 2 is clicked then the selected door becomes door 2
             door2.style.backgroundColor = '#74b9ff';
             setTimeout(() => {
-                door3.style.backgroundColor = 'white';}, 300);
+                door2.style.backgroundColor = 'white';}, 300);
             doorSelectedValue = doors[1];
             doorSelected = 1;
             message.innerHTML = 'You selected door ' + 2;
