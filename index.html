@@ -58,6 +58,8 @@
             border: 2px solid black;
             width:600px;
             justify-self: center;
+            border-radius: 10px;
+            padding: 15px;
         }
 
         #message-container > h3 {
@@ -68,12 +70,16 @@
             margin: auto;
             margin-top: 15px;
             padding: 5px 10px 5px 10px;
-
             background-color: white;
             border: 2px black solid;
-
             font-size: 13px;
         }
+
+        #switch:hover, #stay:hover {
+            background-color: lightgray;
+            cursor: pointer;
+        }
+        
         #simulator-container {
             margin: 0;
             margin-top: 75px;
@@ -89,6 +95,14 @@
         #monty {
             width: 280px;
         }
+
+        button {
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            width: 100px;
+        }
+        
     </style>
 </head>
 <body>
@@ -167,7 +181,7 @@
             message.innerHTML = 'Would you like to switch your door with the other or stay?';} ,1000);
     }
     let showResult = () => { // FUNCTION: If the value of selected door index 0 then you get a goat (and lose), else you get the car (win the prize).
-        if(doors[doorSelected] === 1) {
+        if(doors[doorSelected] === 0) {
             message.innerHTML = 'Aw. You got a goat!';
             body.style.backgroundColor = '#d63031';
             refresh();
@@ -203,7 +217,7 @@
     door1.addEventListener('click', () => { //If door 1 is clicked then the selected door becomes door 1
         door1.style.backgroundColor = '#74b9ff';
         setTimeout(() => {
-            door3.style.backgroundColor = 'white';}, 300);
+            door1.style.backgroundColor = 'white';}, 300);
         doorSelectedValue = doors[0];
         doorSelected = 0;
         message.innerHTML = 'You selected door ' + 1;
@@ -213,7 +227,7 @@
     door2.addEventListener('click', () => { //If door 2 is clicked then the selected door becomes door 2
         door2.style.backgroundColor = '#74b9ff';
         setTimeout(() => {
-            door3.style.backgroundColor = 'white';}, 300);
+            door2.style.backgroundColor = 'white';}, 300);
         doorSelectedValue = doors[1];
         doorSelected = 1;
         message.innerHTML = 'You selected door ' + 2;
@@ -232,10 +246,9 @@
     });
     stayButton.addEventListener('click', showResult);
     switchButton.addEventListener('click', () => {
-        let newDoorIndex;
         for (let i = 0; i < doors.length; i++) {
             if (i !== doorSelected && i !== revealedDoorIndex) {
-                newDoorIndex = i;
+                doorSelected = i;
                 break;
             }
         }
@@ -247,6 +260,10 @@
         randomIndex = Math.floor(Math.random() * 3);
         doors[randomIndex] = 1;
         //If the index value is 1 then it has a car behind it.
+
+        door1Image.src = "door.jpeg";
+        door2Image.src = "door.jpeg";
+        door3Image.src = "door.jpeg";
         console.log(doors);
     }
 </script>
